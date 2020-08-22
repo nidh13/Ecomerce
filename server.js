@@ -24,13 +24,15 @@ app.get("/", (req, res) => {
 //db sync
 const db = require("./app/models");
 db.sequelize.sync();
-/* db.sequelize.sync({ force: true }).then(() => {
+/*
+db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
   run();
 }); */
 
 //istnace route
 require("./app/routes/users.routes")(app);
+require("./app/routes/categorys.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;

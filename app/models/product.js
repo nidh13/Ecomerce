@@ -8,7 +8,7 @@ module.exports = (sequelize, Sequelize) => {
       image: {
         type: Sequelize.STRING
       },
-       description: {
+       marque: {
           type : Sequelize.STRING 
       },
       isInPromo: {
@@ -26,6 +26,10 @@ module.exports = (sequelize, Sequelize) => {
       prixPromotion: {
         type: Sequelize.FLOAT 
       },
+      fornisseur: {
+        type : Sequelize.STRING 
+     }
+     
 
      
     });
