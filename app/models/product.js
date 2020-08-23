@@ -12,7 +12,7 @@ module.exports = (sequelize, Sequelize) => {
           type : Sequelize.STRING 
       },
       isInPromo: {
-        type : Sequelize.INTEGER
+        type : Sequelize.INTEGER, defaultValue: 0
       },
       promoPercentage: {
         type: Sequelize.FLOAT 
@@ -26,8 +26,8 @@ module.exports = (sequelize, Sequelize) => {
       prixPromotion: {
         type: Sequelize.FLOAT 
       },
-      fornisseur: {
-        type : Sequelize.STRING 
+      isSponsor: {
+        type : Sequelize.INTEGER , defaultValue: 0
      }
      
 

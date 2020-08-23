@@ -24,6 +24,10 @@ module.exports = {
     var email = req.body.email;
     var adress = req.body.adress;
     var password = req.body.password;
+    var phone = req.body.phone;
+    var phone_two = req.body.phone_two;
+    var region = req.body.region;
+    var ville =req.body.ville;
     // console.log("test"+prenom);
 
     if(email == null || password == null){
@@ -51,7 +55,12 @@ module.exports = {
           nom : nom,
           prenom : prenom,
           adress : adress,
-          password : bcryptedPassword
+          password : bcryptedPassword,
+          ville : ville,
+          region : region,
+          phone : phone,
+          phone_two : phone_two
+
 
         }).then(function(newUser){
           return res.status(201).json({
@@ -121,7 +130,7 @@ module.exports = {
       return res.status(400).json({ 'error': 'wrong token' });
 
     User.findOne({
-      attributes: [ 'id', 'email', 'nom', 'prenom','adress' ],
+      attributes: [ 'id', 'email', 'nom', 'prenom','adress','phone','phone_two','region','ville'],
       where: { id: userId }
     }).then(function(user) {
       if (user) {
@@ -145,11 +154,15 @@ module.exports = {
     var prenom = req.body.prenom;
     var email = req.body.email;
     var adress = req.body.adress;
-    
+    var phone = req.body.phone;
+    var phone_two = req.body.phone_two;
+    var region = req.body.region;
+    var ville =req.body.ville;
+
  if (userId < 0)
    return res.status(400).json({ 'error': 'wrong token' });
    User.findOne({
-    attributes: ['id','email','nom','prenom','adress'],
+    attributes: ['id','email','nom','prenom','adress','phone','phone_two','region','ville'],
     where: { id: userId }
   }).then(function(userFound){
 
@@ -158,7 +171,11 @@ module.exports = {
         nom: (nom ? nom : userFound.nom),
         prenom: (prenom ? prenom : userFound.prenom),
         email: (email ? email : userFound.email),
-        adress: (adress ? adress : userFound.adress)
+        adress: (adress ? adress : userFound.adress),
+        phone: (phone ? adress : userFound.adress),
+        phone_two: (phone_two ? phone_two : userFound.phone_two),
+        region: (region ? region : userFound.region),
+        ville: (ville ? ville : userFound.ville)
 
 
       }).then(function(userFound){
