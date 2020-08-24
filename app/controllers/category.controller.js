@@ -9,7 +9,7 @@ module.exports ={
         //Params
         name = req.body.name;
         if(name == null){
-            return res.statut(400).json({'error':'messing paramters'});
+            return res.status(400).json({'error':'messing paramters'});
         }
         Category.findOne({
             attributes: ['name'],

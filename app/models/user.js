@@ -20,7 +20,7 @@ module.exports = (sequelize, Sequelize) => {
       phone: {
         type: Sequelize.INTEGER
       },
-      phone_two: {
+      phoneTwo: {
         type: Sequelize.INTEGER
       },
       region: {
