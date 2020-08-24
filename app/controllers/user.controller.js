@@ -25,13 +25,13 @@ module.exports = {
     var adress = req.body.adress;
     var password = req.body.password;
     var phone = req.body.phone;
-    var phone_two = req.body.phone_two;
+    var phoneTwo = req.body.phoneTwo;
     var region = req.body.region;
     var ville =req.body.ville;
     // console.log("test"+prenom);
 
     if(email == null || password == null){
-      return res.statut(400).json({'error':'missing parameter'});
+      return res.status(400).json({'error':'missing parameter'});
     }
     if (!EMAIL_REGEX.test(email)) {
       return res.status(400).json({ 'error': 'email is not valid' });
@@ -59,7 +59,7 @@ module.exports = {
           ville : ville,
           region : region,
           phone : phone,
-          phone_two : phone_two
+         phoneTwo : phoneTwo
 
 
         }).then(function(newUser){
@@ -91,7 +91,7 @@ module.exports = {
     var email = req.body.email;
     var password = req.body.password;
     if(email == null || password == null){
-      res.statut(400).json({'error':'missing parameter'});
+      res.status(400).json({'error':'missing parameter'});
     }
     User.findOne({
       where : {email : email}
@@ -130,7 +130,7 @@ module.exports = {
       return res.status(400).json({ 'error': 'wrong token' });
 
     User.findOne({
-      attributes: [ 'id', 'email', 'nom', 'prenom','adress','phone','phone_two','region','ville'],
+      attributes: [ 'id', 'email', 'nom', 'prenom','adress','phone','phoneTwo','region','ville'],
       where: { id: userId }
     }).then(function(user) {
       if (user) {
@@ -155,14 +155,14 @@ module.exports = {
     var email = req.body.email;
     var adress = req.body.adress;
     var phone = req.body.phone;
-    var phone_two = req.body.phone_two;
+    var phoneTwo = req.body.phoneTwo;
     var region = req.body.region;
     var ville =req.body.ville;
 
  if (userId < 0)
    return res.status(400).json({ 'error': 'wrong token' });
    User.findOne({
-    attributes: ['id','email','nom','prenom','adress','phone','phone_two','region','ville'],
+    attributes: ['id','email','nom','prenom','adress','phone','phoneTwo','region','ville'],
     where: { id: userId }
   }).then(function(userFound){
 
@@ -172,8 +172,8 @@ module.exports = {
         prenom: (prenom ? prenom : userFound.prenom),
         email: (email ? email : userFound.email),
         adress: (adress ? adress : userFound.adress),
-        phone: (phone ? adress : userFound.adress),
-        phone_two: (phone_two ? phone_two : userFound.phone_two),
+        phone: (phone ? phone : userFound.phone),
+        phoneTwo: (phoneTwo ? phoneTwo : userFound.phoneTwo),
         region: (region ? region : userFound.region),
         ville: (ville ? ville : userFound.ville)
 
