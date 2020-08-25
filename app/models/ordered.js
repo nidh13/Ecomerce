@@ -1,7 +1,7 @@
 //const { DataTypes } = require("sequelize/types");
 
 module.exports = (sequelize, Sequelize) => {
-    const Orderes = sequelize.define("ordered", {
+    const Ordered = sequelize.define("ordereds", {
     date_cmd: {
        type : Sequelize.DATE  
    },
@@ -22,5 +22,5 @@ module.exports = (sequelize, Sequelize) => {
      
     });
   
-    return Orderes;
+    return Ordered;
   };
