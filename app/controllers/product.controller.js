@@ -187,6 +187,44 @@ module.exports = {
           }).catch(function(err){
               return res.status(500).json({ 'error': 'unable to get product' });
           });
+},
+deleteByCategory : function(req,res){
+
+  categoryId =req.params.categoryId;
+
+    Product.destroy({
+      where: { categoryId: categoryId }
+    })
+      .then(num => {
+        if (num == 1) {
+          res.send({
+            message: "Products was deleted successfully!"
+          });
+        } else {
+          res.send({
+            message: `Cannot delete Products. Maybe Product was not found!`
+          });
+        }
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Could not delete Products"
+        });
+      });
+}, getAllByIdCategory : function(req,res){
+
+
+  categoryId =req.params.categoryId;
+
+  Product.findAll({
+      attributes: ['id','name','prix','marque','stock','image','isInPromo','prixPromotion','promoPercentage','isSponsor'],
+      where: { categoryId: categoryId }
+     
+          }).then(function(data){
+              return res.status(201).json(data);
+          }).catch(function(err){
+              return res.status(500).json({ 'error': 'unable to get product' });
+          });
 }
     
 
