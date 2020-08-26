@@ -2,6 +2,9 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 
+global.__basedir = __dirname;
+
+
 const app = express();
 
 var corsOptions = {
