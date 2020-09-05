@@ -1,20 +1,20 @@
 //const { DataTypes } = require("sequelize/types");
 
 module.exports = (sequelize, Sequelize) => {
-    const Ordered = sequelize.define("ordereds", {
+    const Commande = sequelize.define("commandes", {
     date_cmd: {
        type : Sequelize.DATE  
    },
-   amount_cmd: {
+   montant_cmd: {
     type : Sequelize.FLOAT  
     },
-    state_cmd: {
+    etat_cmd: {
         type : Sequelize.INTEGER  
         },
-    delivery_mode: {
+    modeLiv: {
          type : Sequelize.INTEGER  
             },
-    payment_mode: {
+    modePay: {
         type : Sequelize.INTEGER  
     },
     
@@ -22,5 +22,5 @@ module.exports = (sequelize, Sequelize) => {
      
     });
   
-    return Ordered;
+    return Commande;
   };

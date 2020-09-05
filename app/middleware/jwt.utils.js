@@ -12,7 +12,7 @@ module.exports = {
         },
         JWT_SIGN_SECRET,
         {
-          expiresIn: '1h'
+          expiresIn: '168h'
         })
         
     },
@@ -30,6 +30,31 @@ module.exports = {
         } catch(err) { }
       }
       return userId;
+    },
+    generateTokenForPanier: function(panierData){
+
+      return jwt.sign({
+       panierId : panierData.id
+          
+      },
+      JWT_SIGN_SECRET,
+      {
+        expiresIn: '168h'
+      })
+      
+  },
+  getPanierId: function(authorization) {
+    var panierId = -1;
+    var token = module.exports.parseAuthorization(authorization);
+    if(token != null) {
+      try {
+        var jwtToken = jwt.verify(token, JWT_SIGN_SECRET);
+        if(jwtToken != null)
+          panierId = jwtToken.panierId;
+          
+      } catch(err) { }
     }
+    return panierId;
+  }
     
 }

@@ -1,13 +1,16 @@
 //const { DataTypes } = require("sequelize/types");
 
 module.exports = (sequelize, Sequelize) => {
-    const Line_cmd = sequelize.define("ligneCmd", {
+    const Line_panier = sequelize.define("lignepanier", {
       quantity: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,defaultValue: 0
       }
 
      
     });
   
-    return Line_cmd;
+    return Line_panier;
   };
+
+
+  
