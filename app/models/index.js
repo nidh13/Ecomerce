@@ -21,10 +21,10 @@ db.sequelize = sequelize;
 
 db.user = require("./user")(sequelize, Sequelize);
 db.category = require("./category.js")(sequelize, Sequelize);
-db.lineCmd = require("./line_cmd")(sequelize, Sequelize);
-db.ordered = require("./ordered")(sequelize, Sequelize);
+db.line_panier = require("./line_panier")(sequelize, Sequelize);
+db.commande = require("./commande")(sequelize, Sequelize);
 db.product = require("./product")(sequelize, Sequelize);
-db.basket = require("./basket")(sequelize, Sequelize);
+db.panier = require("./panier")(sequelize, Sequelize);
 db.accessories = require("./accessories")(sequelize, Sequelize);
 db.description = require("./description")(sequelize, Sequelize);
 db.feature = require("./feature")(sequelize, Sequelize);
@@ -53,6 +53,37 @@ db.feature.belongsTo(db.product, {
   foreignKey: "productId",
   as: "product",
 });
+
+//user panier
+db.user.hasMany(db.panier,{as : "paniers"});
+db.panier.belongsTo(db.user,{
+  foreignKey: "userId",
+  as : "user",
+});
+
+// more methodes panier product
+
+db.panier.belongsToMany(db.product, { through: db.line_panier });
+db.product.belongsToMany(db.panier, { through: db.line_panier });
+
+//panier lign_panier
+db.panier.hasMany(db.line_panier,{as : "line_paniers"});
+db.line_panier.belongsTo(db.panier,{
+  foreignKey: "panierId",
+  as : "panier"
+});
+db.line_panier.belongsTo(db.panier,{
+  foreignKey: "panier_uuid",
+ targetKey : 'uuid' ,
+});
+//prodcut lign_panier
+db.product.hasMany(db.line_panier,{ as :"line_paniers"});
+db.line_panier.belongsTo(db.product,{
+  foreignKey : "productId",
+  as : "product"
+});
+
+
 
 
 
