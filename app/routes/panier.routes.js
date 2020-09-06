@@ -7,6 +7,8 @@ module.exports = app => {
     router.post("/new", paniers.add);
     router.get("/getById/:id", paniers.getbyId);
     router.get("/addProduct/:id",paniers.addProduct);
+    router.get("/deleteProduct/:id",paniers.deleteProduct);
+    
 
   
   
