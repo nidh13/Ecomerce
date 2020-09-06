@@ -66,10 +66,10 @@ module.exports = {
           return res.status(201).json({
             'userId' : newUser.id
            })
-           .catch(function(err){
-            return res.status(500).json({ 'error': ' cant add user' });
-           })
-        })
+           
+        }).catch(function(err){
+          return res.status(500).json({ 'error': ' cant add user' });
+         })
       });
 
      }else{

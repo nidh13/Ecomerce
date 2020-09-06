@@ -147,6 +147,94 @@ module.exports = {
 
         
 
-    },
+    },deleteProduct : function(req,res){
+         //Params
+         var headerAuth  = req.headers['authorization'];
+         var idPanier      = jwtUtils.getPanierId(headerAuth);
+         if (idPanier < 0)
+         return res.status(400).json({ 'error': 'wrong token' });
+         var idProduct = req.params.id;
+         Product.findOne({
+          where: { id: idProduct }
+         }).then(function(prod){
+
+          Panier.findOne({
+            where: {id :idPanier}
+          }).then(function(panier){
+            panier.hasProduct(prod).then(function(data){
+              if(data){
+
+                Line_panier.findOne({
+                  where: {panierId :idPanier , productId :idProduct}
+                }).then(function(line){
+                  if(line.quantity>1){
+
+                    line.update({
+                      quantity : line.quantity -1
+                    }).then(function(lineUpdated){
+                      panier.update({
+                        totale : panier.totale - prod.prixPromotion
+                      }).then(function(panierUpdated){
+                        return res.status(201).json(panierUpdated);
+                      }).catch(function(err){
+                        return res.status(500).json({ 'error': 'unable to update panier' });
+                      });
+
+                    }).catch(function(err){
+                      return res.status(500).json({ 'error': 'unable to update line' });
+                    });
+
+                  }else if(line.quantity ==1){
+                   Line_panier.destroy({
+                    where: {panierId :idPanier , productId :idProduct}
+                   }).then(num => {
+                    if (num == 1) {
+                      panier.update({
+                        totale : panier.totale - prod.prixPromotion
+                      }).then(function(panierUpdated){
+                        return res.status(201).json(panierUpdated);
+                      }).catch(function(err){
+                        return res.status(500).json({ 'error': 'unable to update panier' });
+                      });
+                      
+                    } else {
+                      res.send({
+                        message: "Cannot delete line_paner"
+                      });
+                    }
+                  }).catch(function(err){
+                    return res.status(500).json({ 'error': 'unable to delete line_panier' });      
+                  });
+
+                  }
+                }).catch(function(err){
+                  return res.status(404).json({ 'error': 'unable to found line_panier' });
+                });
+
+              }else{
+                return res.status(404).json({ 'error': 'panier dont ahve product' });
+              }
+            }).catch(function(err){
+              return res.status(404).json({ 'error': 'unable to found line_panier' });
+
+            });
+
+
+          }).catch(function(err){
+            return res.status(500).json({ 'error': 'unable to get panier' });
+          });
+         }).catch(function(err){
+
+          return res.status(500).json({ 'error': 'unable to get product' });
+         });
+
+         
+
+
+
+
+    }
+    
+    
 
 }
