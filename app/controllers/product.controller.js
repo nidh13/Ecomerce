@@ -18,6 +18,9 @@ module.exports = {
         marque = req.body.marque;
         stock =req.body.stock;
         prix =req.body.prix;
+        if(req.file.filename == null){
+          return res.status(400).json({'error':'missing parameter (file)'});
+        }
       
       Product.create({
             name : name,
@@ -195,17 +198,11 @@ deleteByCategory : function(req,res){
     Product.destroy({
       where: { categoryId: categoryId }
     })
-      .then(num => {
-        if (num == 1) {
-          res.send({
-            message: "Products was deleted successfully!"
-          });
-        } else {
-          res.send({
-            message: `Cannot delete Products. Maybe Product was not found!`
-          });
-        }
-      })
+      .then(function(ok){
+        res.send({
+          message: "Productd was deleted successfully!"
+        });
+       })
       .catch(err => {
         res.status(500).send({
           message: "Could not delete Products"

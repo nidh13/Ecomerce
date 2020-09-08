@@ -322,29 +322,36 @@ module.exports = {
     Panier.findOne({
       where :{id : idPanier}
     }).then(function(panier){
-      panier.update({
-        etat : 1,
-        modeLiv : modeLiv,
-        modePay : modePay,
-       // date_cmd : DATE.now()           ************** checkMe *****************
-
-      }).then(function(panierUpdated){
-
-        var newPanier =Panier.create({
-          userId : panierUpdated.userId,
-          uuid : uid
-      }).then(function(newPanier){
-       return res.status(201).json({
-           'token' : jwtUtils.generateTokenForPanier(newPanier)
-       });
-      }).catch(function(err){
-       return res.status(500).json({ 'error': ' cant add panier' });
-      });
+      if(panier.etat == 0){
+        panier.update({
+          etat : 1,
+          modeLiv : modeLiv,
+          modePay : modePay,
+         // date_cmd : DATE.now()           ************** checkMe *****************
+  
+        }).then(function(panierUpdated){
+  
+          var newPanier =Panier.create({
+            userId : panierUpdated.userId,
+            uuid : uid
+        }).then(function(newPanier){
+         return res.status(201).json({
+             'token' : jwtUtils.generateTokenForPanier(newPanier)
+         });
+        }).catch(function(err){
+         return res.status(500).json({ 'error': ' cant add panier' });
+        });
+          
+  
+        }).catch(function(err){
+          return res.status(500).json({ 'error': 'unable to update panier' });
+        });
         
-
-      }).catch(function(err){
-        return res.status(500).json({ 'error': 'unable to update panier' });
-      });
+      }else{
+        return res.status(500).json({ 'error': 'commande is already confirmed' });
+      }
+      
+      
     }).catch(function(err){
       return res.status(500).json({ 'error': 'unable to get panier' });
     });
@@ -357,16 +364,22 @@ module.exports = {
     Panier.findOne({
       where : {id :id}
     }).then(function(panier){
-      panier.update({
-        etat :2
-      }).then(function(panierUpdated){
-        res.send({
-          message: "panier was updated successfully."
+      if(panier.etat == 1){
+        panier.update({
+          etat :2
+        }).then(function(panierUpdated){
+          res.send({
+            message: "panier was updated successfully."
+          });
+  
+        }).catch(function(err){
+          return res.status(500).json({ 'error': 'unable to update panier' });
         });
 
-      }).catch(function(err){
-        return res.status(500).json({ 'error': 'unable to update panier' });
-      });
+      }else{
+        return res.status(500).json({ 'error': 'commande alredy deilv' });
+      }
+     
     }).catch(function(err){
       return res.status(500).json({ 'error': 'unable to get panier' });
     });

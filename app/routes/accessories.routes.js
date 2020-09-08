@@ -3,13 +3,13 @@ module.exports = app => {
   
     var router = require("express").Router();
  
-     router.post("/new", accessories.add);
+     router.post("/new/:productId", accessories.add);
      router.get("/all", accessories.getAll);
      router.get("/getById/:id", accessories.getById);
      router.delete("/delete/:id", accessories.delete);
-     router.delete("/deleteByProduct/:productyId", accessories.deleteByProduct);
+     router.delete("/deleteByProduct/:productId", accessories.deleteByProduct);
      router.put("/update/:id", accessories.update);
-     router.get("/getAllByIdProduct/:productyId", accessories.getAllByIdProduct);
+     router.get("/getAllByIdProduct/:productId", accessories.getAllByIdProduct);
    
   
   
