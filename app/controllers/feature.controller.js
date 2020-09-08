@@ -7,14 +7,14 @@ module.exports = {
     add : function (req,res){
 
         //Parms
-        productyId =req.params.productyId;
+        productId =req.params.productId;
         name = req.body.name;
-        value =req.file.value;
+        value =req.body.value;
        
         Feature.create({
             name : name,
             value : value,
-            productyId :productyId
+            productId :productId
         }).then(function(newFeature){
             return res.status(201).json(newFeature);
 
@@ -72,22 +72,16 @@ module.exports = {
     },
     deleteByProduct : function(req,res){
 
-        productyId =req.params.productyId;
+        productId =req.params.productId;
 
         Feature.destroy({
-          where: { productyId: productyId }
+          where: { productId: productId }
      })
-         .then(num => {
-          if (num == 1) {
-           res.send({
+         .then(function(ok){
+          res.send({
             message: "Features was deleted successfully!"
           });
-        } else {
-          res.send({
-            message: `Cannot delete Features . Maybe Features was not found!`
-          });
-        }
-      })
+         })
       .catch(err => {
         res.status(500).send({
           message: "Could not delete Features "
@@ -114,10 +108,10 @@ module.exports = {
                 });
     },
     getAllByIdProduct : function(req,res){
-      productyId =req.params.productyId;
+      productId =req.params.productId;
   
        Feature.findAll({
-        where: { productyId: productyId }
+        where: { productId: productId }
        })
        .then(function(data){
                    return res.status(201).json(data);

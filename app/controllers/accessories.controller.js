@@ -7,12 +7,12 @@ module.exports = {
     add : function (req,res){
 
         //Parms
-        productyId =req.params.productyId;
+        productId =req.params.productId;
         name = req.body.name;
        
         Accessorie.create({
             name : name,
-            productyId :productyId
+            productId :productId
         }).then(function(newAccessorie){
             return res.status(201).json(newAccessorie);
 
@@ -70,22 +70,16 @@ module.exports = {
     },
     deleteByProduct : function(req,res){
 
-        productyId =req.params.productyId;
+        productId =req.params.productId;
 
         Accessorie.destroy({
-          where: { productyId: productyId }
+          where: { productId: productId }
      })
-         .then(num => {
-          if (num == 1) {
-           res.send({
-            message: "Accessories was deleted successfully!"
-          });
-        } else {
+         .then(function(ok){
           res.send({
-            message: `Cannot delete Accessorie . Maybe Accessories was not found!`
+            message: "accesories was deleted successfully!"
           });
-        }
-      })
+         })
       .catch(err => {
         res.status(500).send({
           message: "Could not delete Accessories "
@@ -112,10 +106,10 @@ module.exports = {
                 });
     },
     getAllByIdProduct : function(req,res){
-      productyId =req.params.productyId;
+      productId =req.params.productId;
   
       Accessorie.findAll({
-        where: { productyId: productyId }
+        where: { productId: productId }
        })
        .then(function(data){
                    return res.status(201).json(data);

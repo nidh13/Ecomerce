@@ -7,14 +7,14 @@ module.exports = {
     add : function (req,res){
 
         //Parms
-        productyId =req.params.productyId;
+        productId =req.params.productId;
         name = req.body.name;
-        value =req.file.value;
+        value =req.body.value;
        
         Description.create({
             name : name,
             value : value,
-            productyId :productyId
+            productId :productId
         }).then(function(newDescription){
             return res.status(201).json(newDescription);
 
@@ -72,22 +72,16 @@ module.exports = {
     },
     deleteByProduct : function(req,res){
 
-        productyId =req.params.productyId;
+        productId =req.params.productId;
 
         Description.destroy({
-          where: { productyId: productyId }
+          where: { productId: productId }
      })
-         .then(num => {
-          if (num == 1) {
-           res.send({
-            message: "Descriptions was deleted successfully!"
-          });
-        } else {
+         .then(function(ok){
           res.send({
-            message: `Cannot delete Description . Maybe Descriptions was not found!`
+            message: "DESCRIPTIONS was deleted successfully!"
           });
-        }
-      })
+         })
       .catch(err => {
         res.status(500).send({
           message: "Could not delete Descriptions "
@@ -114,10 +108,10 @@ module.exports = {
                 });
     },
     getAllByIdProduct : function(req,res){
-      productyId =req.params.productyId;
+      productId =req.params.productId;
   
        Description.findAll({
-        where: { productyId: productyId }
+        where: { productId: productId }
        })
        .then(function(data){
                    return res.status(201).json(data);

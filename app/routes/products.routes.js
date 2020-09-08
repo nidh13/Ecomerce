@@ -11,7 +11,7 @@ module.exports = app => {
     router.get("/getByIdWithDetais/:id", products.getByIdWithDetais);
     router.put("/update/:id",upload.single('file'),products.update);
     router.delete("/delete/:id", products.delete);
-    router.delete("/delete/:categoryId", products.delete);
+    router.delete("/deleteByCategory/:categoryId", products.deleteByCategory);
     router.get("/getById/:id", products.getById);
     router.get("/getSponsorWithDetais", products.getSponsorWithDetais);
     router.get("/getAll", products.getAll);
